@@ -1,0 +1,19 @@
+name: Rynek
+version: 1.0.0
+main: pl.rynek.RynekPlugin
+api-version: '1.21'
+depend: [Vault]
+softdepend: [StormItemy]
+description: Rynek graczy z GUI, kategoriami, inteligentnym wyszukiwaniem i prowizją.
+commands:
+  ah:
+    description: Rynek graczy
+    aliases: [rynek]
+    usage: /ah [open|sell <cena>]
+permissions:
+  rynek.use:
+    default: true
+  rynek.sell:
+    default: true
+  rynek.admin:
+    default: op

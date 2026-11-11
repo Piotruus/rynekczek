@@ -1,0 +1,108 @@
+# ===== Rynek - konfiguracja =====
+currency-symbol: "$"
+gui-title: "Rynek"
+listing-duration-hours: 24      # po tylu godzinach oferta wygasa (gracz odbiera ją w "Przedmioty, które wygasły")
+fee-percent: 3.0                # prowizja od sprzedaży
+min-price: 1
+max-price: 1000000000000
+default-max-listings: 10        # limit ofert na gracza; większy limit: uprawnienie rynek.limit.<liczba>
+search-timeout-seconds: 60
+blacklist: [BEDROCK, BARRIER, COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, REPEATING_COMMAND_BLOCK, STRUCTURE_BLOCK, JIGSAW, DEBUG_STICK, LIGHT, SPAWNER]
+
+messages:
+  only-player: "&cTę komendę może użyć tylko gracz."
+  no-permission: "&cNie masz uprawnień."
+  usage: "&6Prawidłowe użycie: /ah lub /ah sell <cena>"
+  sell-usage: "&6Prawidłowe użycie: /ah sell <cena>"
+  invalid-price: "&cPodaj poprawną cenę (np. 1000, 2.5k, 1m)."
+  price-too-low: "&cMinimalna cena to &f{min}&c."
+  price-too-high: "&cMaksymalna cena to &f{max}&c."
+  hand-empty: "&cMusisz trzymać przedmiot w ręce!"
+  blacklisted: "&cTego przedmiotu nie można sprzedać na rynku."
+  limit-reached: "&cOsiągnąłeś limit ofert na rynku (&f{limit}&c)."
+  listed-title: "&aPrzedmiot trafił na rynek!"
+  sold: "&aTwój przedmiot został sprzedany"
+  sold-details: "&7Otrzymano &a{amount} &7(prowizja {fee}%)."
+  sold-offline: "&aSprzedano &f{count} &aprzedmiot(ów), gdy Cię nie było."
+  bought: "&aKupiłeś &f{item} &aza &2{price}&a."
+  not-enough-money: "&cNie stać Cię na to! Cena: &f{price}"
+  no-space: "&cNie masz miejsca w ekwipunku!"
+  gone: "&cTa oferta jest już niedostępna!"
+  own-listing: "&cTo Twoja oferta! Wycofasz ją w &fTwoje aktywne przedmioty&c."
+  withdrawn: "&aWycofano ofertę, przedmiot wrócił do ekwipunku."
+  claimed: "&aOdebrano wygasły przedmiot."
+  expired-notify: "&eJedna z Twoich ofert wygasła. Odbierz ją: &f/ah &e-> Przedmioty, które wygasły."
+  expired-join: "&eMasz &f{count} &ewygasłych przedmiotów na rynku (&f/ah&e)."
+  search-title: "&6Wpisz frazę!"
+  search-subtitle: "&7Napisz na czacie lub &canuluj"
+  search-prompt: "&6Wpisz na czacie szukaną frazę (np. &fdiamentowy miecz ostrość&6, &f<5000&6 = cena do 5000) lub &fanuluj&6."
+  search-set: "&aSzukasz: &f{query}"
+  search-cancel: "&cAnulowano wyszukiwanie."
+  reloaded: "&aPrzeładowano konfigurację rynku."
+  error: "&cWystąpił błąd transakcji. Spróbuj ponownie."
+
+# ===== Kategorie (lewa kolumna GUI, max 4) =====
+# Reguły "match" (wystarczy spełnić jedną; "all-text" wymaga wszystkich słów):
+#   materials: [MATERIAŁY]      suffix: [_SWORD]      contains: [POTION]  (fragment nazwy materiału)
+#   name: [słowa w nazwie]      lore: [słowa w lore]  text: [słowa w nazwie LUB lore]
+#   all-text: [słowa, które muszą wystąpić razem]
+#   pdc: ["namespace:klucz"]    (klucz PersistentDataContainer - sposób na rozpoznanie przedmiotów StormItemy)
+# Słowa są porównywane bez wielkości liter i bez polskich znaków.
+# Podkategoria z "all: true" pokazuje wszystko z danej kategorii (+ własne reguły).
+categories:
+  narzedzia:
+    title: "NARZĘDZI"
+    color: "&b"
+    icon: DIAMOND_PICKAXE
+    subcategories:
+      wszystko: { name: "Wszystko", all: true }
+      miecze:   { name: "Miecze",   match: { suffix: [_SWORD] } }
+      kilofy:   { name: "Kilofy",   match: { suffix: [_PICKAXE] } }
+      lopaty:   { name: "Łopaty",   match: { suffix: [_SHOVEL] } }
+      siekiery: { name: "Siekiery", match: { suffix: [_AXE] } }
+      motyki:   { name: "Motyki",   match: { suffix: [_HOE] } }
+      luki:     { name: "Łuki",     match: { materials: [BOW, CROSSBOW] } }
+      trojzeby: { name: "Trójzęby", match: { materials: [TRIDENT] } }
+  zbroje:
+    title: "UZBROJENIA"
+    color: "&6"
+    icon: DIAMOND_HELMET
+    subcategories:
+      wszystko:    { name: "Wszystko",   all: true }
+      helmy:       { name: "Hełmy",      match: { suffix: [_HELMET] } }
+      napiersniki: { name: "Napierśniki", match: { suffix: [_CHESTPLATE] } }
+      spodnie:     { name: "Spodnie",    match: { suffix: [_LEGGINGS] } }
+      buty:        { name: "Buty",       match: { suffix: [_BOOTS] } }
+      elytry:      { name: "Elytry",     match: { materials: [ELYTRA] } }
+      kostiumy:    { name: "Kostiumy",   match: { name: [kostium], pdc: ["stormitemy:kostium"] } }
+  specjalne:
+    title: "SPECJALNE"
+    color: "&c"
+    icon: RED_DYE
+    subcategories:
+      wszystko:   { name: "Wszystko", all: true }
+      serca:      { name: "Serca",    match: { name: [serce, serca], pdc: ["stormitemy:serce"] } }
+      eventowki_stale:     { name: "Eventówki (stałe)",     match: { all-text: [event, stal] } }
+      eventowki_zuzywalne: { name: "Eventówki (zużywalne)", match: { all-text: [event, zuzywal] } }
+      przydatne:  { name: "Przydatne", match: { text: [przydatn] } }
+      klucze:     { name: "Klucze",   match: { materials: [TRIPWIRE_HOOK], name: [klucz] } }
+      pety:       { name: "Pety",     match: { name: [pet, zwierzak] } }
+      potki:      { name: "Potki",    match: { contains: [POTION], name: [mikstur, potk] } }
+  ksiegi:
+    title: "KSIĄG"
+    color: "&d"
+    icon: ENCHANTED_BOOK
+    subcategories:
+      wszystko: { name: "Wszystko", all: true, match: { materials: [ENCHANTED_BOOK, BOOK, WRITTEN_BOOK] } }
+      otrucie:  { name: "Otrucie przeciwnika", match: { text: [otruc] } }
+      niepodpalania: { name: "Niepodalania", match: { text: [niepodpal] } }
+      pospiechu: { name: "Pospiechu", match: { text: [pospiech] } }
+      regeneracja: { name: "Regeneracja", match: { text: [regenerac] } }
+      szybkosci: { name: "Szybkości", match: { text: [szybkosc] } }
+      spowolnienia: { name: "Spowolnienia", match: { text: [spowolnien] } }
+      wampiryzmu: { name: "Wampiryzmu", match: { text: [wampiryzm] } }
+      vouchery: { name: "Vouchery", match: { text: [voucher] } }
+      uniku: { name: "Uniku", match: { text: [unik] } }
+      obrazenia_krytycznego: { name: "Obrażenia krytycznego", match: { text: [krytyczn] } }
+      ulaskawienia: { name: "Ułaskawienia", match: { text: [ulaskawien] } }
+      wytrzymalosci: { name: "Wytrzymałości", match: { text: [wytrzymalo] } }
